@@ -5,18 +5,19 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 
-/**
- * Created by Jeff on 6/5/2016.
- */
+
 public class MyStopBackgroundService extends IntentService {
 
+    private static final String TAG = "us.jeff_wilson.mystop";
+    public static final String NEAR_STOP = "NearMyStop";
 
     MyStopBackgroundService() {
-        super("MyStopBackgroundService");
+        super(MyStopBackgroundService.class.getName());
     }
 
     boolean isNear(Location l1, Location l2) {
@@ -47,6 +48,9 @@ public class MyStopBackgroundService extends IntentService {
         TransitLineStop stop = line.findStop(stopName);
         Location stopLocation = stop._stopLocation;
 
+        // debug
+        Log.d(TAG, "background service.  stopName: " + stopName);
+
 
         boolean done = false;
 
@@ -70,13 +74,21 @@ public class MyStopBackgroundService extends IntentService {
 
             if (myLocation != null && stopLocation != null) {
                 if (isNear(myLocation, stopLocation)) {
+
+                    // debug
+                    Log.d(TAG, "my location is near stop.");
+
                     // raise alarm
                     done = true;
+
+                    Intent i = new Intent(NEAR_STOP);
+                    sendBroadcast(i);
+
                 } else {
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
-
+                        e.printStackTrace();
                     }
                 }
             }

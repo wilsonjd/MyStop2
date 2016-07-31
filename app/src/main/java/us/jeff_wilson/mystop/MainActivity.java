@@ -1,12 +1,16 @@
 package us.jeff_wilson.mystop;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.location.Location;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -48,6 +52,10 @@ public class MainActivity extends AppCompatActivity {
         _theDatabase = new TransitDatabase();
         _theDatabase.loadData();
         activity = this;
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(MyStopBackgroundService.NEAR_STOP);
+        registerReceiver(downloadReceiver, intentFilter);
 
         setContentView(R.layout.activity_main);
         // ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -252,4 +260,15 @@ public class MainActivity extends AppCompatActivity {
         AppIndex.AppIndexApi.end(client, viewAction);
         client.disconnect();
     }
+
+    private BroadcastReceiver downloadReceiver = new BroadcastReceiver() {
+
+        // Called when the broadcast is received
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            Log.e("MyStopBackgroundService", "Service Received");
+
+        }
+    };
 }
