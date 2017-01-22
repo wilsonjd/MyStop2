@@ -3,6 +3,7 @@ package us.jeff_wilson.mystop;
 import android.location.Location;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -12,11 +13,14 @@ import java.util.Set;
  * Created by Jeff on 3/22/2016.
  */
 public class TransitDatabase {
-    Map<String, MetroArea> _metroAreas;
+    LinkedHashMap<String, MetroArea> _metroAreas;
 
     TransitLineStop[] hudsonLineStops;
+    TransitLineStop[] orangeLineStops;
+
 
     String[] hudsonLineStopNames = {
+            "Jeff House",
              "Poughkeepsie",
              "New Hamburgh",
              "Beacon",
@@ -33,6 +37,7 @@ public class TransitDatabase {
              "Grand Central Terminal",
     };
     double[] hudsonLineLatLng = {
+            41.872735, -73.896301,
             41.706641, -73.938001,
             41.586692, -73.947494,
             41.506443, -73.984787,
@@ -49,6 +54,43 @@ public class TransitDatabase {
             40.752838, -73.977139,
     };
 
+    String[] chicagoOrangeLineStopNames = {
+            "Midway",
+            "Pulaski",
+            "Kedzie",
+            "Western",
+            "35/Archer",
+            "Ashland",
+            "Halsted",
+            "Roosevelt",
+            "Adams/Wabash",
+            "Randolph/Wabash",
+            "State/Lake",
+            "Clark/Lake",
+            "Washington/Wells",
+            "Quincy/Wells",
+            "LaSalle/Van Buren",
+            "State/Van Buren",
+    };
+
+    double[] chicagoOrangeLineLatLng = {
+            41.786786, -87.737983,
+            41.800028, -87.724091,
+            41.804238, -87.704382,
+            41.804665, -87.684039,
+            41.829349, -87.680868,
+            41.839264, -87.665427,
+            41.846878, -87.648212,
+            41.867360, -87.626667,
+            41.879497, -87.626068,
+            41.884423, -87.626183,
+            41.885781, -87.627949,
+            41.885730, -87.631531,
+            41.882569, -87.633825,
+            41.878736, -87.633767,
+            41.876904, -87.631809,
+            41.876957, -87.628727,
+    };
     /*
         StopInfo hudsonLineStops[] = {
                 { "Poughkeepsie", 41.706641, -73.938001},
@@ -107,7 +149,7 @@ public class TransitDatabase {
     };
     */
 
-    TransitDatabase() { _metroAreas = new HashMap<>(); }
+    TransitDatabase() { _metroAreas = new LinkedHashMap<>(); }
 
     public MetroArea findMetroArea(String name) {
         return _metroAreas.get(name);
@@ -136,6 +178,16 @@ public class TransitDatabase {
         TransitLine ctaLBrown = ctaL.createLine("Brown");
         TransitLine ctaLGreen = ctaL.createLine("Green");
         TransitLine ctaLOrange = ctaL.createLine("Orange");
+
+        orangeLineStops = new TransitLineStop[chicagoOrangeLineStopNames.length];
+        for(int i = 0; i < chicagoOrangeLineStopNames.length; ++i) {
+            Location testLoc = new Location("test");
+            testLoc.setLatitude(chicagoOrangeLineLatLng[i*2]);  // myLoc.lattitude
+            testLoc.setLongitude(chicagoOrangeLineLatLng[i*2 + 1]); // myLoc.longitude
+            orangeLineStops[i] = ctaLOrange.createStop(chicagoOrangeLineStopNames[i], testLoc);
+        }
+
+
         TransitLine ctaLPurple = ctaL.createLine("Purple");
         TransitLine ctaLPink = ctaL.createLine("Pink");
         TransitLine ctaLYellow = ctaL.createLine("Yellow");
@@ -174,7 +226,7 @@ public class TransitDatabase {
         TransitLine hempteadLine = LIRR.createLine("Hempstead");
         TransitLine ronkLine = LIRR.createLine("Ronkonkoma");
 
-                TransitSystem NYCSubway = nyc.createSystem("Subway");
+        TransitSystem NYCSubway = nyc.createSystem("Subway");
 
         MetroArea wash = createMetroArea("Washington");
 

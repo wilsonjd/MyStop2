@@ -73,6 +73,8 @@ public class MyStopBackgroundService extends IntentService {
             //  if "close" raise alarm
 
             if (myLocation != null && stopLocation != null) {
+                Log.d(TAG, "myLocation = " + myLocation);
+
                 if (isNear(myLocation, stopLocation)) {
 
                     // debug

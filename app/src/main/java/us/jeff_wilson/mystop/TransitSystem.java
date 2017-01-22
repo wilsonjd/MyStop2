@@ -1,6 +1,7 @@
 package us.jeff_wilson.mystop;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -9,13 +10,13 @@ import java.util.Set;
  */
 public class TransitSystem {
     String _name;
-    private Map<String, TransitLine> _lineMap;
+    private LinkedHashMap<String, TransitLine> _lineMap;
     MetroArea _theMetroArea;
 
     TransitSystem(MetroArea ma, String n) {
         _theMetroArea = ma;
         _name = n;
-        _lineMap = new HashMap<>();
+        _lineMap = new LinkedHashMap<>();
     }
     public String getName() { return _name;}
 

@@ -28,6 +28,8 @@ import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "us.jeff_wilson.mystop";
+
     static TransitDatabase _theDatabase;
     Spinner MetroSpinner;
     Spinner SystemSpinner;
@@ -55,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(MyStopBackgroundService.NEAR_STOP);
-        registerReceiver(downloadReceiver, intentFilter);
+        registerReceiver(stopReceiver, intentFilter);
 
         setContentView(R.layout.activity_main);
         // ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -170,14 +172,14 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             System.out.println("button click");
-            System.out.println("selected stop = " + selectedStop);
+            System.out.println("selected stop = " + selectedStop.getName());
 
             if (selectedStop != null) {
                 Location l = selectedStop.getLocation();
 
                 MapActivity.myPos = new LatLng(l.getLatitude(), l.getLongitude());
 
-
+                Log.d(TAG, "starting map activity");
                 Intent intent = new Intent(MainActivity.this, MapActivity.class);
                 startActivity(intent);
 
@@ -191,6 +193,7 @@ public class MainActivity extends AppCompatActivity {
                 myIntent.putExtra("system_name", systemName);
                 myIntent.putExtra("metro_name", metroName);
 
+                Log.d(TAG, "starting service background service");
                 startService(myIntent);
 
             }
@@ -261,13 +264,20 @@ public class MainActivity extends AppCompatActivity {
         client.disconnect();
     }
 
-    private BroadcastReceiver downloadReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver stopReceiver = new BroadcastReceiver() {
 
         // Called when the broadcast is received
         @Override
         public void onReceive(Context context, Intent intent) {
 
             Log.e("MyStopBackgroundService", "Service Received");
+
+            Intent arrivedIntent = new Intent(MainActivity.this, ArrivedPopupActivity.class);
+    //        EditText editText = (EditText) findViewById(R.id.edit_message);
+    //        String message = editText.getText().toString();
+    //        arrivedIntent.putExtra(EXTRA_MESSAGE, message);
+            startActivity(arrivedIntent);
+
 
         }
     };
