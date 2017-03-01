@@ -17,6 +17,7 @@ public class TransitDatabase {
 
     TransitLineStop[] hudsonLineStops;
     TransitLineStop[] orangeLineStops;
+    TransitLineStop[] redLineStops;
 
 
     String[] hudsonLineStopNames = {
@@ -90,6 +91,78 @@ public class TransitDatabase {
             41.878736, -87.633767,
             41.876904, -87.631809,
             41.876957, -87.628727,
+    };
+
+    String[] chicagoRedLineStopNames = {
+            "95th/Dan Ryan",
+            "87th",
+            "79th",
+            "69th",
+            "63rd",
+            "Garfield",
+            "47th",
+            "Sox-35th",
+            "Cermak-Chinatown",
+            "Roosevelt",
+            "Harrison",
+            "Jackson",
+            "Monroe",
+            "Lake",
+            "Grand",
+            "Chicago",
+            "Clark/Division",
+            "North/Clybourn",
+            "Fullerton",
+            "Belmont",
+            "Addison",
+            "Sheridan",
+            "Wilson",
+            "Lawrence",
+            "Argyle",
+            "Berwyn",
+            "Bryn Mawr",
+            "Throndale",
+            "Granville",
+            "Loyola",
+            "Morse",
+            "Jarvis",
+            "Howard",
+    };
+
+    double[] chicagoRedLineLatLng = {
+            41.722401, -87.624329,
+            41.735296, -87.624765,
+            41.750724, -87.625187,
+            41.769396, -87.625825,
+            41.780391, -87.630996,
+            41.795327, -87.631174,
+            41.810238, -87.631109,
+            41.831312, -87.630684,
+            41.853528, -87.631115,
+            41.867460, -87.627110,
+            41.874141, -87.627612,
+            41.877473, -87.627764,
+            41.880051, -87.627715,
+            41.884983, -87.627788,
+            41.891817, -87.628070,
+            41.896592, -87.628263,
+            41.903784, -87.632464,
+            41.910735, -87.649000,
+            41.925199, -87.652800,
+            41.939846, -87.653272,
+            41.947514, -87.653689,
+            41.953851, -87.654989,
+            41.965416, -87.657944,
+            41.969111, -87.658422,
+            41.973417, -87.658542,
+            41.977958, -87.658656,
+            41.983509, -87.658858,
+            41.990264, -87.659044,
+            41.993777, -87.659132,
+            42.001149, -87.661055,
+            42.008281, -87.665978,
+            42.015949, -87.669218,
+            42.018772, -87.672559,
     };
     /*
         StopInfo hudsonLineStops[] = {
@@ -185,6 +258,14 @@ public class TransitDatabase {
             testLoc.setLatitude(chicagoOrangeLineLatLng[i*2]);  // myLoc.lattitude
             testLoc.setLongitude(chicagoOrangeLineLatLng[i*2 + 1]); // myLoc.longitude
             orangeLineStops[i] = ctaLOrange.createStop(chicagoOrangeLineStopNames[i], testLoc);
+        }
+
+        redLineStops = new TransitLineStop[chicagoRedLineStopNames.length];
+        for(int i = 0; i < chicagoRedLineStopNames.length; ++i) {
+            Location testLoc = new Location("test");
+            testLoc.setLatitude(chicagoRedLineLatLng[i*2]);  // myLoc.lattitude
+            testLoc.setLongitude(chicagoRedLineLatLng[i*2 + 1]); // myLoc.longitude
+            redLineStops[i] = ctaLRed.createStop(chicagoRedLineStopNames[i], testLoc);
         }
 
 

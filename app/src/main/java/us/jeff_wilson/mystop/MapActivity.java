@@ -67,6 +67,10 @@ public class MapActivity extends Activity {
 
                         if (ActivityCompat.checkSelfPermission(MapActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MapActivity.this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                             // TODO: Consider calling
+                            ActivityCompat.requestPermissions(MainActivity.activity,
+                                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                                    MainActivity.MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+
                             //    ActivityCompat#requestPermissions
                             // here to request the missing permissions, and then overriding
                             //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
