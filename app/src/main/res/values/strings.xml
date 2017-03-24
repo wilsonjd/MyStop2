@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MyStop</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="arrived_at_stop">"You&apos;ve arrived at your Stop"</string>
 </resources>
